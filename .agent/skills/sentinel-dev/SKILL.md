@@ -72,4 +72,5 @@ The "Sentinel" aesthetic is critical.
 ## 5. Deployment & Build
 
 - Run `npm run build` to verify standard Next.js build.
-- Ensure all environment variables (`NEXT_PUBLIC_FIRECRAWL_API_KEY`, Supabase keys) are set.
+- Ensure all environment variables (`FIRECRAWL_API_KEY`, Supabase keys) are set.
+- **Security Note**: `FIRECRAWL_API_KEY` must NOT have `NEXT_PUBLIC_` prefix to prevent client-side exposure.
