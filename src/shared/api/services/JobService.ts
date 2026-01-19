@@ -1,6 +1,7 @@
 import { firecrawl, SearchResponse } from "@/shared/lib/firecrawl";
 import { Job } from "@/entities/models";
 import { supabase } from "@/shared/api/supabase";
+import { logger } from "@/shared/lib/logger";
 
 export const JobService = {
   async searchJobs(query: string): Promise<Job[]> {
@@ -13,12 +14,12 @@ export const JobService = {
       })) as unknown as SearchResponse;
 
       // Debug: Log raw response structure
-      console.log("[JobService] Raw results type:", typeof results);
-      console.log(
+      logger.log("[JobService] Raw results type:", typeof results);
+      logger.log(
         "[JobService] Results keys:",
         results ? Object.keys(results) : "null",
       );
-      console.log(
+      logger.log(
         "[JobService] Has data?:",
         !!results?.data,
         "Length:",
@@ -26,11 +27,11 @@ export const JobService = {
       );
 
       if (!results.data || results.data.length === 0) {
-        console.log("[JobService] No data found, returning empty array");
+        logger.log("[JobService] No data found, returning empty array");
         return [];
       }
 
-      console.log("[JobService] Processing", results.data.length, "items");
+      logger.log("[JobService] Processing", results.data.length, "items");
 
       const jobs = results.data.map((item) => {
         const metadata = item.metadata || {};
@@ -67,13 +68,13 @@ export const JobService = {
         );
 
         if (error) {
-          console.error("Failed to persist jobs:", error);
+          logger.error("Failed to persist jobs:", error);
         }
       }
 
       return jobs;
     } catch (error) {
-      console.error("Job search failed:", error);
+      logger.error("Job search failed:", error);
       // Rethrow to let the store handle error state
       throw error;
     }
