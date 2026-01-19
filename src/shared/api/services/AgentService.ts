@@ -1,4 +1,5 @@
 import { firecrawl, AgentResult } from "@/shared/lib/firecrawl";
+import { logger } from "@/shared/lib/logger";
 
 export interface AgentOptions {
   urls?: string[];
@@ -36,7 +37,7 @@ export const AgentService = {
       });
 
       if (!response.success) {
-        console.error("Agent failed:", response);
+        logger.error("Agent failed:", response);
         return null;
       }
 
@@ -46,7 +47,7 @@ export const AgentService = {
         creditsUsed: response.creditsUsed,
       };
     } catch (error) {
-      console.error("Agent error:", error);
+      logger.error("Agent error:", error);
       // Agent might not be available in all SDK versions
       return null;
     }

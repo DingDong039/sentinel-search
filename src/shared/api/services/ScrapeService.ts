@@ -1,4 +1,5 @@
 import { firecrawl, ScrapeResult } from "@/shared/lib/firecrawl";
+import { logger } from "@/shared/lib/logger";
 
 export interface ScrapeOptions {
   formats?: ("markdown" | "html" | "links" | "screenshot")[];
@@ -34,7 +35,7 @@ export const ScrapeService = {
         metadata: result.metadata,
       };
     } catch (error) {
-      console.error("Scrape error:", error);
+      logger.error("Scrape error:", error);
       return null;
     }
   },

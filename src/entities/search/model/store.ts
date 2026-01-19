@@ -5,6 +5,7 @@ import {
   searchProductsAction,
   searchNewsAction,
 } from "@/app/actions";
+import { logger } from "@/shared/lib/logger";
 
 export type SearchError = {
   type: "credits_exhausted" | "rate_limit" | "unknown";
@@ -45,7 +46,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
 
       set({ jobs, products, news, loading: false });
     } catch (error) {
-      console.error("Search failed:", error);
+      logger.error("Search failed:", error);
 
       // Detect error type from message
       const errorMessage =
@@ -74,4 +75,3 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     }
   },
 }));
-

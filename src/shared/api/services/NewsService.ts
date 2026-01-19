@@ -1,6 +1,7 @@
 import { firecrawl, SearchResponse } from "@/shared/lib/firecrawl";
 import { News } from "@/entities/models";
 import { supabase } from "@/shared/api/supabase";
+import { logger } from "@/shared/lib/logger";
 
 export const NewsService = {
   async searchNews(query: string): Promise<News[]> {
@@ -51,13 +52,13 @@ export const NewsService = {
         );
 
         if (error) {
-          console.error("Failed to persist news:", error);
+          logger.error("Failed to persist news:", error);
         }
       }
 
       return newsItems;
     } catch (error) {
-      console.error("News search failed:", error);
+      logger.error("News search failed:", error);
       // Rethrow to let the store handle error state
       throw error;
     }

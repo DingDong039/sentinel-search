@@ -1,6 +1,7 @@
 import { firecrawl, SearchResponse } from "@/shared/lib/firecrawl";
 import { Product } from "@/entities/models";
 import { supabase } from "@/shared/api/supabase";
+import { logger } from "@/shared/lib/logger";
 
 export const ProductService = {
   async searchProduct(productName: string): Promise<Product[]> {
@@ -52,13 +53,13 @@ export const ProductService = {
         );
 
         if (error) {
-          console.error("Failed to persist products:", error);
+          logger.error("Failed to persist products:", error);
         }
       }
 
       return products;
     } catch (error) {
-      console.error("Product search failed:", error);
+      logger.error("Product search failed:", error);
       // Rethrow to let the store handle error state
       throw error;
     }
@@ -91,7 +92,7 @@ export const ProductService = {
         rating: Number(data.rating) || 0,
       };
     } catch (error) {
-      console.error("Product scrape failed:", error);
+      logger.error("Product scrape failed:", error);
       return null;
     }
   },

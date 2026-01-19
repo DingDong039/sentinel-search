@@ -1,4 +1,5 @@
 import { firecrawl, CrawlResult, ScrapeResult } from "@/shared/lib/firecrawl";
+import { logger } from "@/shared/lib/logger";
 
 export interface CrawlOptions {
   limit?: number;
@@ -44,7 +45,7 @@ export const CrawlService = {
         data,
       };
     } catch (error) {
-      console.error("Crawl error:", error);
+      logger.error("Crawl error:", error);
       return null;
     }
   },
